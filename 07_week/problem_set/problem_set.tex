@@ -1,0 +1,188 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, graphicx, hyperref}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage[margin=1in]{geometry}
+
+\title{In-Class Problem Set: Distributions, Q--Q Plots, and Faceting (R + GitHub)}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent \textbf{Goal.} Use real conflict data to practice diagnosing distributional shape using histograms, density plots, and Q--Q plots, including comparisons across groups using faceting. You will pull the data from GitHub, build a reproducible workflow, generate required plots, interpret what they show, and submit via GitHub.
+
+\medskip
+\noindent \textbf{Dataset.} \texttt{battle\_deaths} (1141 rows; 6 variables):
+\begin{itemize}
+  \item \texttt{iso2c} (country code), \texttt{country}, \texttt{year}
+  \item \texttt{battle\_deaths} (numeric; battle-related deaths)
+  \item \texttt{region} (categorical), \texttt{income} (categorical)
+\end{itemize}
+
+\medskip
+\noindent \textbf{What to submit (in your GitHub repo).}
+\begin{itemize}
+  \item A script file: \texttt{scripts/lab.R}
+  \item A short write-up: \texttt{outputs/writeup.md}
+  \item Saved figures in \texttt{figures/} (see requirements below)
+\end{itemize}
+
+\medskip
+\noindent \textbf{Rules.}
+\begin{itemize}
+  \item Work inside an \textbf{R Project}.
+  \item Use a \textbf{sequential, hard-coded workflow} (no user-defined functions).
+  \item Save figures using \texttt{ggsave()} (no screenshots).
+  \item Git commands must be run in the \textbf{Terminal tab}, not the R Console.
+  \item Unless your lecture explicitly did otherwise, treat missing values defensibly (state what you did).
+\end{itemize}
+
+\section*{Questions}
+
+\begin{enumerate}
+
+  \item \textbf{Pull the data and set up your workflow (proof required).}
+  \begin{enumerate}
+    \item In the \textbf{Terminal tab}, run:
+\begin{verbatim}
+git status
+git pull
+\end{verbatim}
+    \item Confirm the dataset file exists in your repo (path posted in the course repository).
+    \item Create the standard folder structure (if missing): \texttt{scripts/}, \texttt{outputs/}, \texttt{figures/}.
+    \item \textbf{Proof (write-up):} In \texttt{outputs/writeup.md}, paste:
+    \begin{itemize}
+      \item the output of \texttt{getwd()},
+      \item the output of \texttt{list.files()} from the project root, and
+      \item the output of \texttt{list.files("data")} showing the dataset file.
+    \end{itemize}
+  \end{enumerate}
+
+  \item \textbf{Load and summarize \texttt{battle\_deaths}.}
+  \begin{enumerate}
+    \item Load the dataset into an object named \texttt{df}.
+    \item Verify the six key columns exist: \texttt{country}, \texttt{year}, \texttt{battle\_deaths}, \texttt{region}, \texttt{income}.
+    \item Summarize the distribution of \texttt{battle\_deaths} (min/median/mean/max is sufficient).
+    \item \textbf{Proof (write-up):} Report:
+    \begin{itemize}
+      \item number of rows and columns,
+      \item the number of unique countries,
+      \item the range of years,
+      \item a short summary of \texttt{battle\_deaths}.
+    \end{itemize}
+  \end{enumerate}
+
+  \item \textbf{Histogram of battle deaths (baseline).}
+  
+  Create a histogram of \texttt{battle\_deaths}.
+  \begin{itemize}
+    \item You must make a clear binning choice and state it (binwidth or number of bins).
+    \item If you restrict the x-axis (e.g., to reduce the influence of extreme values), you must state the rule you used.
+  \end{itemize}
+
+  \noindent Save as:
+  \[
+    \texttt{figures/battle\_deaths\_hist.png}
+  \]
+
+  \item \textbf{Density plot of battle deaths (baseline).}
+
+  Create a density plot of \texttt{battle\_deaths}.
+  \begin{itemize}
+    \item Use the same x-axis limits as your histogram (so the two are comparable).
+    \item Label the axes clearly.
+  \end{itemize}
+
+  \noindent Save as:
+  \[
+    \texttt{figures/battle\_deaths\_density.png}
+  \]
+
+  \item \textbf{Q--Q plot (normality check).}
+
+  Create a Q--Q plot comparing \texttt{battle\_deaths} to a theoretical normal distribution.
+  \begin{itemize}
+    \item Include a Q--Q reference line.
+    \item In your write-up, describe what kind of deviation you see (e.g., heavy right tail, skew).
+  \end{itemize}
+
+  \noindent Save as:
+  \[
+    \texttt{figures/battle\_deaths\_qq.png}
+  \]
+
+  \item \textbf{Faceting by income and region (required).}
+
+  Create two sets of faceted distribution plots:
+
+  \begin{enumerate}
+    \item A faceted plot by \textbf{income}
+    \item A faceted plot by \textbf{region}
+  \end{enumerate}
+
+  \noindent For each set, choose \textbf{one} distribution geometry that was covered in lecture (histogram or density) and facet it. Your goal is to compare how distributional shape differs across groups.
+
+  \medskip
+  \noindent \textbf{Required:}
+  \begin{itemize}
+    \item Use consistent axis limits across facets (so comparisons are meaningful).
+    \item If some facets are too sparse to interpret, state what you did (e.g., dropped very small groups, or noted limitations).
+  \end{itemize}
+
+  \noindent Save as:
+  \begin{itemize}
+    \item \texttt{figures/facet\_income.png}
+    \item \texttt{figures/facet\_region.png}
+  \end{itemize}
+
+  \item \textbf{Interpretation (write-up required).}
+
+  In \texttt{outputs/writeup.md}, write 12--16 sentences addressing:
+  \begin{itemize}
+    \item What do the histogram and density plot suggest about skew and tail behavior?
+    \item What does the Q--Q plot reveal (and why is it useful here)?
+    \item Compare distributions by income: what differences (if any) stand out?
+    \item Compare distributions by region: what differences (if any) stand out?
+    \item Name one concrete plotting choice you made (bins, limits, faceting) and why it helped interpretability.
+  \end{itemize}
+
+  \item \textbf{Push your work to GitHub (proof required).}
+  \begin{enumerate}
+    \item In the \textbf{Terminal tab}, run:
+\begin{verbatim}
+git status
+git add .
+git commit -m "Distributions lab: battle_deaths faceting + QQ"
+git push
+\end{verbatim}
+    \item \textbf{Proof (write-up):} Paste:
+    \begin{itemize}
+      \item the output of \texttt{git status} after committing (clean working tree), and
+      \item the output of \texttt{git log -1}.
+    \end{itemize}
+  \end{enumerate}
+
+\end{enumerate}
+
+\section*{Optional challenge (if you finish early): ggridges}
+Create a ridgeline density plot using \texttt{ggridges} for \texttt{battle\_deaths} grouped by \textbf{income} \emph{or} \textbf{region}.
+\begin{itemize}
+  \item Save as \texttt{figures/ridgeline.png}.
+  \item In 4--6 sentences, explain what the ridgeline plot makes easier (or harder) to compare relative to faceting.
+\end{itemize}
+
+\section*{Checklist (before you leave)}
+\begin{itemize}
+  \item \texttt{scripts/lab.R} runs top-to-bottom
+  \item Required figures exist in \texttt{figures/}:
+  \begin{itemize}
+    \item \texttt{battle\_deaths\_hist.png}, \texttt{battle\_deaths\_density.png}, \texttt{battle\_deaths\_qq.png}
+    \item \texttt{facet\_income.png}, \texttt{facet\_region.png}
+  \end{itemize}
+  \item \texttt{outputs/writeup.md} includes interpretation + proofs
+  \item Work is committed and pushed to GitHub
+\end{itemize}
+
+\end{document}

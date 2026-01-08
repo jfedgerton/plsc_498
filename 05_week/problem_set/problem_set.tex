@@ -1,0 +1,182 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, graphicx, hyperref}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage[margin=1in]{geometry}
+
+\title{In-Class Problem Set: Exploring Movie Data with Distribution and Color (R + GitHub)}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent \textbf{Goal.} Use real movie data to practice visualizing distributions, comparing groups, and encoding multiple variables in a single plot. You will pull the dataset from GitHub, build a reproducible workflow, generate several plots, interpret what they show, and submit your work via GitHub.
+
+\medskip
+\noindent \textbf{What to submit (in your GitHub repo).}
+\begin{itemize}
+  \item A script file: \texttt{scripts/lab.R}
+  \item A short write-up: \texttt{outputs/writeup.md}
+  \item Saved figures in \texttt{figures/} (see requirements below)
+\end{itemize}
+
+\medskip
+\noindent \textbf{Rules.}
+\begin{itemize}
+  \item Work inside an \textbf{R Project}.
+  \item Use a \textbf{sequential, hard-coded workflow} (no user-defined functions).
+  \item Save figures using code (\texttt{ggsave}); do not use screenshots.
+  \item Git commands must be run in the \textbf{Terminal tab}, not the R Console.
+\end{itemize}
+
+\section*{Mini codebook (use this; do not guess)}
+
+Each row represents one movie. Relevant variables include:
+\begin{itemize}
+  \item \texttt{budget}: Production budget in USD (0 if unavailable).
+  \item \texttt{revenue}: Worldwide box office revenue in USD (0 if unavailable).
+  \item \texttt{director}: Director of the movie.
+  \item \texttt{runtime}: Movie length in minutes.
+  \item \texttt{vote\_average}: Average user rating (0--10).
+  \item \texttt{vote\_count}: Number of user votes.
+  \item \texttt{popularity}: Popularity score based on user engagement.
+\end{itemize}
+
+\section*{Questions}
+
+\begin{enumerate}
+
+  \item \textbf{Pull the movie dataset from GitHub (proof required).}
+  \begin{enumerate}
+    \item In the \textbf{Terminal tab}, run:
+\begin{verbatim}
+git status
+git pull
+\end{verbatim}
+    \item Confirm the movie dataset exists in your repo (location specified in the course GitHub).
+    \item \textbf{Proof (write-up):} In \texttt{outputs/writeup.md}, paste:
+    \begin{itemize}
+      \item the output of \texttt{getwd()} from inside your R Project, and
+      \item the output of \texttt{list.files("data")} showing the movie file.
+    \end{itemize}
+  \end{enumerate}
+
+  \item \textbf{Load and summarize the dataset.}
+  \begin{enumerate}
+    \item Load the movie dataset into an object named \texttt{df}.
+    \item Summarize the dataset to understand its structure.
+    
+    \textbf{Suggested edit:} Use \texttt{dim(df)}, \texttt{names(df)}, and a focused summary of \texttt{budget} and \texttt{revenue}.
+    \item \textbf{Proof (write-up):} Report:
+    \begin{itemize}
+      \item number of rows and columns,
+      \item the range of \texttt{budget},
+      \item the range of \texttt{revenue}.
+    \end{itemize}
+  \end{enumerate}
+
+  \item \textbf{Plot distributions: movie budget and revenue.}
+  
+  Create two histograms:
+  \begin{itemize}
+    \item one for \texttt{budget},
+    \item one for \texttt{revenue}.
+  \end{itemize}
+
+  \noindent \textbf{Suggested edit (important):}
+  \begin{itemize}
+    \item Use consistent bin widths.
+    \item Decide whether to include or exclude zero values, and state your choice.
+  \end{itemize}
+
+  \noindent Save the plots as:
+  \begin{itemize}
+    \item \texttt{figures/budget\_hist.png}
+    \item \texttt{figures/revenue\_hist.png}
+  \end{itemize}
+
+  \item \textbf{Identify top-grossing directors and compare revenue.}
+  \begin{enumerate}
+    \item Identify the \textbf{top three directors} by total box office revenue (sum of \texttt{revenue}).
+    \item Subset the data to movies directed by these three directors.
+    \item Create a \textbf{boxplot} showing the distribution of \texttt{revenue} for each director.
+  \end{enumerate}
+
+  \noindent Save the plot as:
+  \[
+    \texttt{figures/revenue\_by\_director.png}
+  \]
+
+  \noindent \textbf{Suggested edit:} Ensure the director names are readable and the y-axis is clearly labeled in USD.
+
+  \item \textbf{Scatter plot with size and category encodings.}
+  
+  Create a scatter plot with:
+  \begin{itemize}
+    \item x-axis: \texttt{budget}
+    \item y-axis: \texttt{revenue}
+  \end{itemize}
+
+  Then:
+  \begin{itemize}
+    \item Choose \textbf{one additional quantitative variable} (e.g., \texttt{popularity} or \texttt{vote\_count}) and map it to \textbf{point size}.
+    \item Choose \textbf{one categorical variable} (e.g., \texttt{original\_language} or a simplified genre indicator) and map it to \textbf{color}.
+  \end{itemize}
+
+  \noindent \textbf{Suggested edit:}
+  \begin{itemize}
+    \item Use a color palette that makes category differences clear.
+    \item Avoid using size in a way that hides smaller-budget films.
+  \end{itemize}
+
+  \noindent Save the plot as:
+  \[
+    \texttt{figures/budget\_revenue\_scatter.png}
+  \]
+
+  \item \textbf{Interpretation (write-up required).}
+
+  In \texttt{outputs/writeup.md}, write 10--14 sentences addressing:
+  \begin{itemize}
+    \item What do the budget and revenue histograms reveal about the movie industry?
+    \item How do revenues differ across the top-grossing directors?
+    \item In the scatter plot, what relationships are most visually salient?
+    \item How do size and color encodings change what is easy or hard to see?
+  \end{itemize}
+
+  \item \textbf{Push your work to GitHub (proof required).}
+  \begin{enumerate}
+    \item In the \textbf{Terminal tab}, run:
+\begin{verbatim}
+git status
+git add .
+git commit -m "Movie data visualization lab"
+git push
+\end{verbatim}
+    \item \textbf{Proof (write-up):} Paste:
+    \begin{itemize}
+      \item the output of \texttt{git status} after committing (clean working tree), and
+      \item the output of \texttt{git log -1}.
+    \end{itemize}
+  \end{enumerate}
+
+\end{enumerate}
+
+\section*{Optional challenge (if you finish early)}
+Choose one plot and create an alternative version optimized for a \textbf{general public} audience rather than an expert audience. In 5--7 sentences, explain:
+\begin{itemize}
+  \item what design choices you changed,
+  \item what information you simplified or emphasized,
+  \item and why these changes are appropriate for a public-facing visualization.
+\end{itemize}
+
+\section*{Checklist (before you leave)}
+\begin{itemize}
+  \item \texttt{scripts/lab.R} runs top-to-bottom
+  \item \texttt{outputs/writeup.md} exists and includes interpretations + proofs
+  \item Required figures exist in \texttt{figures/}
+  \item Work is committed and pushed to GitHub
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,188 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, graphicx, hyperref}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage[margin=1in]{geometry}
+
+\title{In-Class Problem Set: Color Encodings with Senate Ideology Data (R + GitHub)}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent \textbf{Goal.} Practice using color intentionally (not decoratively) by visualizing ideology in the U.S.\ Senate across four time points. You will (i) pull the data from GitHub, (ii) subset to the target Senates, (iii) make one plot for each time point with color encoding ideology, (iv) interpret what you see, and (v) submit via GitHub.
+
+\medskip
+\noindent \textbf{What to submit (in your GitHub repo).}
+\begin{itemize}
+  \item A script file: \texttt{scripts/lab.R}
+  \item A short write-up: \texttt{outputs/writeup.md}
+  \item Four figures (one per time point) saved to \texttt{figures/}
+\end{itemize}
+
+\medskip
+\noindent \textbf{Rules (read carefully).}
+\begin{itemize}
+  \item Work inside an \textbf{R Project}.
+  \item Use a \textbf{sequential, hard-coded workflow} (no user-defined functions).
+  \item Your plots must:
+  \begin{itemize}
+    \item set a non-default plot background color,
+    \item use colors that are intuitive for the task,
+    \item use an accessibility-conscious palette (colorblind-friendly),
+    \item and \textbf{explicitly justify your color scale choice} (sequential vs diverging) in your write-up.
+  \end{itemize}
+  \item Save outputs using \texttt{ggsave()} (no screenshots).
+  \item Git commands go in the \textbf{Terminal tab} (not the R Console).
+\end{itemize}
+
+\section*{Mini codebook (use this; do not guess)}
+
+\begin{itemize}
+  \item \textbf{Which Senates to use.} For this problem set, use the following Congress numbers to represent the four target time points:
+  \begin{itemize}
+    \item \textbf{1990} $\rightarrow$ \textbf{101st Congress}
+    \item \textbf{2000} $\rightarrow$ \textbf{106th Congress}
+    \item \textbf{2010} $\rightarrow$ \textbf{111th Congress}
+    \item \textbf{2020} $\rightarrow$ \textbf{116th Congress}
+  \end{itemize}
+  \item \textbf{What DW-NOMINATE is.} DW-NOMINATE is an ideology scaling procedure based on roll-call voting. In most datasets:
+  \begin{itemize}
+    \item \texttt{dwnom1} is the primary (left--right) ideological dimension,
+    \item \texttt{dwnom2} is a secondary ideological dimension (often smaller and context-dependent).
+  \end{itemize}
+  \item \textbf{What you will plot.} Your scatterplots should use the two ideology dimensions (typically \texttt{dwnom1} on x and \texttt{dwnom2} on y), and \textbf{color points by ideology} (typically \texttt{dwnom1}) unless your course codebook specifies a different ideology column.
+  \item \textbf{Color scale rule (required).}
+  \begin{itemize}
+    \item If the ideology variable has meaningful sign around 0 (e.g., negative vs positive), use a \textbf{diverging} scale centered at 0.
+    \item If you treat ideology as magnitude only (no meaningful center), use a \textbf{sequential} scale.
+  \end{itemize}
+  In your write-up, state which rule you used and why.
+\end{itemize}
+
+\section*{Questions}
+
+\begin{enumerate}
+
+  \item \textbf{Pull the correct Senate data from GitHub (proof required).}
+  \begin{enumerate}
+    \item In the \textbf{Terminal tab}, run:
+\begin{verbatim}
+git status
+git pull
+\end{verbatim}
+    \item Confirm the Senate ideology file exists in your repo (the exact file name/path is in the course repo; for most of you it will be in \texttt{data/}).
+    \item \textbf{Proof (write-up):} In \texttt{outputs/writeup.md}, paste:
+    \begin{itemize}
+      \item the output of \texttt{getwd()} from inside your R Project, and
+      \item the output of \texttt{list.files("data")} showing the Senate file.
+    \end{itemize}
+  \end{enumerate}
+
+  \item \textbf{Load and summarize the dataset.}
+  \begin{enumerate}
+    \item In \texttt{scripts/lab.R}, load the dataset into an object named \texttt{df}.
+    \item Summarize the dataset in a way that supports your next steps. At minimum include:
+    \begin{itemize}
+      \item \texttt{dim(df)}
+      \item \texttt{names(df)}
+      \item a focused summary of the key columns you will use (time/Congress, chamber, ideology).
+    \end{itemize}
+    \item \textbf{Proof (write-up):} Report:
+    \begin{itemize}
+      \item number of rows and columns,
+      \item the column you will use for Congress/time,
+      \item the column you will use to identify the Senate chamber (if applicable),
+      \item the ideology columns you will use (e.g., \texttt{dwnom1}, \texttt{dwnom2}).
+    \end{itemize}
+  \end{enumerate}
+
+  \item \textbf{Subset to the four target Senates (required).}
+  \begin{enumerate}
+    \item Subset the data so it contains only \textbf{Senate} observations for the following Congresses:
+    \[
+      \{101, 106, 111, 116\}.
+    \]
+    \item Save the subset as \texttt{df4}.
+    \item \textbf{Proof (write-up):} Include counts that confirm:
+    \begin{itemize}
+      \item only these four Congresses appear in \texttt{df4}, and
+      \item \texttt{df4} contains only Senate observations (not House).
+    \end{itemize}
+  \end{enumerate}
+
+  \item \textbf{Make four plots (one per Congress), with color encoding ideology (required).}
+
+  For each of the four Congresses, create a scatterplot using the two DW-NOMINATE dimensions:
+  \begin{itemize}
+    \item x-axis: \texttt{dwnom1}
+    \item y-axis: \texttt{dwnom2}
+    \item color: ideology (typically \texttt{dwnom1})
+  \end{itemize}
+
+  \noindent \textbf{Required design constraints (integrated).} Each plot must:
+  \begin{itemize}
+    \item set a non-default plot background color,
+    \item use an accessibility-conscious palette,
+    \item use a color scale that is \textbf{intuitive for the task}:
+      \begin{itemize}
+        \item \textbf{diverging centered at 0} if ideology sign matters, or
+        \item \textbf{sequential} if you treat ideology as magnitude only,
+      \end{itemize}
+    \item label axes and the legend clearly (what the variable is).
+  \end{itemize}
+
+  \noindent Save figures to \texttt{figures/} with clear names, for example:
+  \begin{itemize}
+    \item \texttt{figures/senate\_101.png}
+    \item \texttt{figures/senate\_106.png}
+    \item \texttt{figures/senate\_111.png}
+    \item \texttt{figures/senate\_116.png}
+  \end{itemize}
+
+  \item \textbf{Interpretation (write-up required).}
+
+  In \texttt{outputs/writeup.md}, write 10--14 sentences answering:
+  \begin{itemize}
+    \item What does color represent in your plots (which variable, which direction, what range)?
+    \item Compare the earliest vs latest Congress in your set: what changed in ideological separation and dispersion?
+    \item \textbf{Color-scale justification (required):} Did you use a sequential or diverging scale? Why does that choice match the meaning of ideology in your plot?
+    \item Accessibility: state one concrete decision you made to improve accessibility (palette choice, contrast with background, labeling).
+  \end{itemize}
+
+  \item \textbf{Push to GitHub (proof required).}
+  \begin{enumerate}
+    \item In the \textbf{Terminal tab}, run:
+\begin{verbatim}
+git status
+git add .
+git commit -m "Color encodings lab: Senate ideology plots"
+git push
+\end{verbatim}
+    \item \textbf{Proof (write-up):} Paste:
+    \begin{itemize}
+      \item the output of \texttt{git status} after committing (clean working tree), and
+      \item the output of \texttt{git log -1}.
+    \end{itemize}
+  \end{enumerate}
+
+\end{enumerate}
+
+\section*{Optional challenge (if you finish early)}
+Create a second version of one Congress plot that changes exactly \textbf{one} design element:
+\begin{itemize}
+  \item Switch sequential $\leftrightarrow$ diverging (and explain why the alternative is worse), \emph{or}
+  \item Keep the same palette but change the background color and explain how contrast changes readability.
+\end{itemize}
+In 5--7 sentences, argue which version is better for (i) a general audience and (ii) an expert audience.
+
+\section*{Checklist (before you leave)}
+\begin{itemize}
+  \item \texttt{scripts/lab.R} exists and runs top-to-bottom
+  \item \texttt{outputs/writeup.md} exists and includes interpretation + proofs
+  \item Four figures saved in \texttt{figures/} (101, 106, 111, 116)
+  \item Work is committed and pushed to GitHub
+\end{itemize}
+
+\end{document}

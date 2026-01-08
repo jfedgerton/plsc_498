@@ -1,0 +1,181 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, graphicx, hyperref}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage[margin=1in]{geometry}
+
+\title{In-Class Problem Set: Totals vs Proportions in Political and Health Data (R + GitHub)}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent \textbf{Goal.} Practice the difference between visualizing \emph{totals} and \emph{proportions}, and understand how these choices change interpretation. You will use state-level election and public health data to construct total counts, proportions, and grouped comparisons, then visualize them using appropriate color encodings.
+
+\medskip
+\noindent \textbf{Dataset.} The provided dataset contains one row per U.S.\ state with election results and cumulative death counts through November 7, 2020.
+
+\medskip
+\noindent \textbf{Key variables (excerpt).}
+\begin{itemize}
+  \item \texttt{totalvotes}, \texttt{biden\_votes}, \texttt{trump\_votes}
+  \item \texttt{biden\_share}, \texttt{trump\_share}, \texttt{biden\_margin}
+  \item \texttt{covid\_deaths\_to\_2020\_11\_07}
+  \item \texttt{pneumonia\_deaths\_to\_2020\_11\_07}
+\end{itemize}
+
+\medskip
+\noindent \textbf{What to submit (in your GitHub repo).}
+\begin{itemize}
+  \item A script file: \texttt{scripts/lab.R}
+  \item A short write-up: \texttt{outputs/writeup.md}
+  \item Saved figures in \texttt{figures/} (see requirements below)
+\end{itemize}
+
+\medskip
+\noindent \textbf{Rules.}
+\begin{itemize}
+  \item Work inside an \textbf{R Project}.
+  \item Use a \textbf{sequential, hard-coded workflow} (no user-defined functions).
+  \item Save figures using \texttt{ggsave()} (no screenshots).
+  \item Git commands must be run in the \textbf{Terminal tab}, not the R Console.
+  \item Color choices must be intuitive and accessibility-conscious.
+\end{itemize}
+
+\section*{Questions}
+
+\begin{enumerate}
+
+  \item \textbf{Pull the data and set up your workflow (proof required).}
+  \begin{enumerate}
+    \item In the \textbf{Terminal tab}, run:
+\begin{verbatim}
+git status
+git pull
+\end{verbatim}
+    \item Confirm the dataset exists in your repo (path specified in the course GitHub).
+    \item Create the standard folder structure if missing: \texttt{scripts/}, \texttt{outputs/}, \texttt{figures/}.
+    \item \textbf{Proof (write-up):} In \texttt{outputs/writeup.md}, paste:
+    \begin{itemize}
+      \item the output of \texttt{getwd()},
+      \item the output of \texttt{list.files("data")}.
+    \end{itemize}
+  \end{enumerate}
+
+  \item \textbf{Load and inspect the dataset.}
+  \begin{enumerate}
+    \item Load the dataset into an object named \texttt{df}.
+    \item Summarize the data structure.
+    
+    \textbf{Suggested edit:} Use \texttt{dim(df)}, \texttt{names(df)}, and a focused summary of vote and death variables.
+    \item \textbf{Proof (write-up):} Report:
+    \begin{itemize}
+      \item number of rows and columns,
+      \item the range of \texttt{totalvotes},
+      \item the range of \texttt{covid\_deaths\_to\_2020\_11\_07}.
+    \end{itemize}
+  \end{enumerate}
+
+  \item \textbf{Create a total illness death variable.}
+  \begin{enumerate}
+    \item Create a new variable:
+    \[
+      \texttt{total\_illness\_deaths = covid\_deaths + pneumonia\_deaths}
+    \]
+    \item Compute total illness deaths aggregated across all states.
+    \item \textbf{Proof (write-up):} Report the national total and the minimum/maximum state totals.
+  \end{enumerate}
+
+  \item \textbf{Visualize totals: bar plot of total illness deaths by state.}
+  
+  Create a bar plot showing \textbf{total illness deaths by state}.
+
+  \medskip
+  \noindent \textbf{Required:}
+  \begin{itemize}
+    \item Order states by total illness deaths.
+    \item Clearly label axes.
+    \item State explicitly that this is a \emph{total}, not a proportion.
+  \end{itemize}
+
+  \noindent Save as:
+  \[
+    \texttt{figures/total\_illness\_deaths\_by\_state.png}
+  \]
+
+  \item \textbf{Visualize proportions: Trump vs Biden.}
+
+  Create a categorical variable indicating the election winner:
+  \begin{itemize}
+    \item \texttt{winner = "Biden"} if \texttt{biden\_share > trump\_share}
+    \item \texttt{winner = "Trump"} otherwise
+  \end{itemize}
+
+  Then:
+  \begin{enumerate}
+    \item Create a bar plot showing the \textbf{proportion of total illness deaths} accounted for by Trump- vs Biden-won states.
+    \item Use an appropriate color scheme:
+    \begin{itemize}
+      \item red--blue for categorical winner, or
+      \item red--purple--blue if you choose to encode \texttt{biden\_margin}.
+    \end{itemize}
+  \end{enumerate}
+
+  \noindent \textbf{Required:}
+  \begin{itemize}
+    \item Colors must be intuitive and colorblind-friendly.
+    \item The plot must clearly communicate that values are \emph{proportions}, not raw counts.
+  \end{itemize}
+
+  \noindent Save as:
+  \[
+    \texttt{figures/illness\_deaths\_by\_winner\_proportion.png}
+  \]
+
+  \item \textbf{Interpretation (write-up required).}
+
+  In \texttt{outputs/writeup.md}, write 12--16 sentences addressing:
+  \begin{itemize}
+    \item How interpretation changes when moving from totals to proportions.
+    \item What the bar plot of totals emphasizes that the proportional plot hides.
+    \item What the proportional plot emphasizes that the totals plot hides.
+    \item Why your color choices are appropriate for the task.
+    \item One way these plots could be misinterpreted if shown without context.
+  \end{itemize}
+
+  \item \textbf{Push your work to GitHub (proof required).}
+  \begin{enumerate}
+    \item In the \textbf{Terminal tab}, run:
+\begin{verbatim}
+git status
+git add .
+git commit -m "Totals vs proportions lab"
+git push
+\end{verbatim}
+    \item \textbf{Proof (write-up):} Paste:
+    \begin{itemize}
+      \item the output of \texttt{git status} after committing,
+      \item the output of \texttt{git log -1}.
+    \end{itemize}
+  \end{enumerate}
+
+\end{enumerate}
+
+\section*{Optional challenge (if you finish early)}
+Create an alternative visualization where:
+\begin{itemize}
+  \item the same data are shown using \textbf{faceting} instead of color, or
+  \item you encode \texttt{biden\_margin} as a continuous color scale (red--purple--blue).
+\end{itemize}
+In 5--7 sentences, explain which version is clearer and for what audience.
+
+\section*{Checklist (before you leave)}
+\begin{itemize}
+  \item \texttt{scripts/lab.R} runs top-to-bottom
+  \item Required figures exist in \texttt{figures/}
+  \item \texttt{outputs/writeup.md} includes interpretation + proofs
+  \item Work is committed and pushed to GitHub
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,187 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, graphicx, hyperref}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage[margin=1in]{geometry}
+
+\title{In-Class Problem Set: Distributions and Overplotting with Flight Data (R + GitHub)}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent \textbf{Goal.} Practice visualizing and interpreting distributions using real transportation data. You will use histograms and density plots to explore skewed variables, compare groups, and diagnose overplotting. You will submit your work through GitHub using a reproducible workflow.
+
+\medskip
+\noindent \textbf{Dataset.} This problem set uses the \texttt{nycflights13} dataset, which contains detailed information on flights departing from NYC airports.
+
+\medskip
+\noindent \textbf{Key variables.}
+\begin{itemize}
+  \item \texttt{dep\_delay}: Departure delay (minutes)
+  \item \texttt{arr\_delay}: Arrival delay (minutes)
+  \item \texttt{air\_time}: Time in the air (minutes)
+  \item \texttt{distance}: Flight distance (miles)
+  \item \texttt{carrier}: Airline carrier code
+  \item \texttt{origin}: Airport of origin (JFK, LGA, EWR)
+\end{itemize}
+
+\medskip
+\noindent \textbf{What to submit (in your GitHub repo).}
+\begin{itemize}
+  \item A script file: \texttt{scripts/lab.R}
+  \item A short write-up: \texttt{outputs/writeup.md}
+  \item Saved figures in \texttt{figures/} (see requirements below)
+\end{itemize}
+
+\medskip
+\noindent \textbf{Rules.}
+\begin{itemize}
+  \item Work inside an \textbf{R Project}.
+  \item Use a \textbf{sequential, hard-coded workflow} (no user-defined functions).
+  \item Save all plots using \texttt{ggsave()} (no screenshots).
+  \item Git commands must be run in the \textbf{Terminal tab}, not the R Console.
+\end{itemize}
+
+\section*{Questions}
+
+\begin{enumerate}
+
+  \item \textbf{Pull the data and set up your workflow (proof required).}
+  \begin{enumerate}
+    \item Pull the latest course repository from GitHub:
+\begin{verbatim}
+git status
+git pull
+\end{verbatim}
+    \item Confirm you can load the \texttt{nycflights13} package in R.
+    \item \textbf{Proof (write-up):} In \texttt{outputs/writeup.md}, paste:
+    \begin{itemize}
+      \item the output of \texttt{getwd()},
+      \item the output of \texttt{head(nycflights13::flights)}.
+    \end{itemize}
+  \end{enumerate}
+
+  \item \textbf{Explore skew with histograms.}
+
+  Create histograms for the following variables:
+  \begin{itemize}
+    \item \texttt{dep\_delay}
+    \item \texttt{arr\_delay}
+  \end{itemize}
+
+  \noindent \textbf{Required:}
+  \begin{itemize}
+    \item Use at least \textbf{two different bin widths} for each variable.
+    \item Decide whether to include or exclude extreme values and justify your choice.
+  \end{itemize}
+
+  \noindent Save your figures as:
+  \begin{itemize}
+    \item \texttt{figures/dep\_delay\_hist.png}
+    \item \texttt{figures/arr\_delay\_hist.png}
+  \end{itemize}
+
+  \item \textbf{Histogram vs density: same data, different views.}
+
+  For \texttt{dep\_delay}, create:
+  \begin{itemize}
+    \item one histogram, and
+    \item one density plot.
+  \end{itemize}
+
+  \noindent \textbf{Suggested edit:}
+  \begin{itemize}
+    \item Use the same x-axis limits so the plots are comparable.
+    \item Make clear in labels what each plot represents.
+  \end{itemize}
+
+  \noindent Save your figures as:
+  \begin{itemize}
+    \item \texttt{figures/dep\_delay\_hist\_vs\_density.png}
+  \end{itemize}
+
+  \item \textbf{Grouped distributions.}
+
+  Compare the distribution of \texttt{dep\_delay} across:
+  \begin{itemize}
+    \item \textbf{origins} (JFK, LGA, EWR), or
+    \item \textbf{carriers} (choose at least three major carriers).
+  \end{itemize}
+
+  \noindent Create one plot that shows all groups together using color or faceting.
+
+  \noindent \textbf{Important:} You must address overplotting explicitly (e.g., overlapping densities or stacked histograms).
+
+  \noindent Save your figure as:
+  \[
+    \texttt{figures/grouped\_dep\_delay.png}
+  \]
+
+  \item \textbf{Overplotting and transparency.}
+
+  Create a scatter plot with:
+  \begin{itemize}
+    \item x-axis: \texttt{distance}
+    \item y-axis: \texttt{air\_time}
+  \end{itemize}
+
+  Then:
+  \begin{itemize}
+    \item produce one version without transparency,
+    \item produce a second version using transparency (\texttt{alpha}).
+  \end{itemize}
+
+  \noindent Save your figures as:
+  \begin{itemize}
+    \item \texttt{figures/airtime\_distance\_raw.png}
+    \item \texttt{figures/airtime\_distance\_alpha.png}
+  \end{itemize}
+
+  \item \textbf{Interpretation (write-up required).}
+
+  In \texttt{outputs/writeup.md}, write 12--16 sentences addressing:
+  \begin{itemize}
+    \item How skew appears in the delay variables.
+    \item How bin width changes what patterns are visible.
+    \item What information density plots emphasize relative to histograms.
+    \item How grouping changes your interpretation of delays.
+    \item Why transparency matters in the scatter plot.
+  \end{itemize}
+
+  \item \textbf{Push your work to GitHub (proof required).}
+  \begin{enumerate}
+    \item In the \textbf{Terminal tab}, run:
+\begin{verbatim}
+git status
+git add .
+git commit -m "Distribution and overplotting lab: flights data"
+git push
+\end{verbatim}
+    \item \textbf{Proof (write-up):} Paste:
+    \begin{itemize}
+      \item the output of \texttt{git status} after committing, and
+      \item the output of \texttt{git log -1}.
+    \end{itemize}
+  \end{enumerate}
+
+\end{enumerate}
+
+\section*{Optional challenge (if you finish early)}
+Choose one distribution (e.g., \texttt{dep\_delay}) and create a version that improves interpretability for a \textbf{general audience}. In 5--7 sentences, explain:
+\begin{itemize}
+  \item what design choices you changed (bins, scale, labels, grouping),
+  \item what you simplified or emphasized,
+  \item and why these choices help a non-technical viewer.
+\end{itemize}
+
+\section*{Checklist (before you leave)}
+\begin{itemize}
+  \item \texttt{scripts/lab.R} runs top-to-bottom
+  \item Required figures exist in \texttt{figures/}
+  \item \texttt{outputs/writeup.md} includes interpretation + proofs
+  \item Work is committed and pushed to GitHub
+\end{itemize}
+
+\end{document}

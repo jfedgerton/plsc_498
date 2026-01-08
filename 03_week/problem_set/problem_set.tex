@@ -1,0 +1,153 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, graphicx, hyperref}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage[margin=1in]{geometry}
+
+\title{In-Class Problem Set: Scaling Plots with Overdispersed Election Data (R + GitHub)}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent \textbf{Goal.} Use overdispersed election data to practice how axis scaling changes what patterns are visible. You will (i) pull data from GitHub, (ii) build a reproducible workflow, (iii) make the same plot twice (raw vs scaled), (iv) write an interpretation comparing the two, and (v) submit via GitHub.
+
+\medskip
+\noindent \textbf{What to submit (in your GitHub repo).}
+\begin{itemize}
+  \item A script file: \texttt{scripts/lab.R}
+  \item A short write-up: \texttt{outputs/writeup.md}
+  \item Two saved figures: \texttt{figures/plot\_raw.png} and \texttt{figures/plot\_scaled.png}
+\end{itemize}
+
+\medskip
+\noindent \textbf{Rules.}
+\begin{itemize}
+  \item Work inside an \textbf{R Project}.
+  \item Use a \textbf{sequential, hard-coded workflow} (no user-defined functions).
+  \item Save outputs using code (\texttt{ggsave}); do not rely on screenshots.
+  \item Git commands go in the \textbf{Terminal tab} (not the R Console).
+\end{itemize}
+
+\section*{Questions}
+
+\begin{enumerate}
+
+  \item \textbf{Copy the data from GitHub (proof required).}
+  \begin{enumerate}
+    \item Pull the latest version of the course repository to ensure you have the election dataset.
+    \item Confirm the dataset file exists.
+    \item \textbf{Proof (write-up):} In \texttt{outputs/writeup.md}, paste:
+    \begin{itemize}
+      \item the output of \texttt{getwd()} (from inside your R Project), and
+      \item the output of \texttt{list.files("data")} showing the dataset file.
+    \end{itemize}
+  \end{enumerate}
+
+  \item \textbf{Set up a reproducible workflow (folders + script).}
+  \begin{enumerate}
+    \item Ensure your project contains these folders (create them if missing):
+    \begin{itemize}
+      \item \texttt{scripts/}
+      \item \texttt{outputs/}
+      \item \texttt{figures/}
+    \end{itemize}
+    \item Create a script named \texttt{scripts/lab.R}. All code for this problem set must live in this script.
+    \item \textbf{Suggested edit (important):} At the top of \texttt{scripts/lab.R}, include:
+    \begin{itemize}
+      \item a short header comment describing what the script does,
+      \item \texttt{library(...)} calls,
+      \item \texttt{set.seed(123)}.
+    \end{itemize}
+    \item \textbf{Proof (write-up):} paste the output of \texttt{list.files()} from your project root.
+  \end{enumerate}
+
+  \item \textbf{Load the election data and build the analysis dataset.}
+  \begin{enumerate}
+    \item Load \texttt{data/HOUSE\_precinct\_general.csv} into an object called \texttt{df}.
+    \item Filter the data so it includes only:
+    \begin{itemize}
+      \item general election entries (stage = \texttt{"GEN"})
+      \item major parties only (party\_simplified in \texttt{\{"DEMOCRAT","REPUBLICAN"\}})
+      \item non-missing county information
+    \end{itemize}
+    \item Aggregate to the \textbf{county level} and compute:
+    \begin{itemize}
+      \item \texttt{county\_total\_votes = DEMOCRAT + REPUBLICAN}
+      \item \texttt{rep\_share = REPUBLICAN / (DEMOCRAT + REPUBLICAN)}
+    \end{itemize}
+    \item \textbf{Suggested edit:} Use the codebook (in the repo) to confirm the meaning of \texttt{votes}, \texttt{party\_simplified}, and \texttt{county\_name}. Cite the codebook filename in your write-up.
+    \item \textbf{Proof (write-up):} report:
+    \begin{itemize}
+      \item number of counties in your aggregated dataset,
+      \item summary of \texttt{county\_total\_votes},
+      \item summary of \texttt{rep\_share}.
+    \end{itemize}
+  \end{enumerate}
+
+  \item \textbf{Plot 1: raw scale (required).}
+  
+  Create a scatter plot with:
+  \begin{itemize}
+    \item x-axis: \texttt{county\_total\_votes}
+    \item y-axis: \texttt{rep\_share}
+    \item point color: \texttt{rep\_share} (continuous color scale; use this to reflect partisanship)
+  \end{itemize}
+
+  \noindent Save the figure as:
+  \[
+    \texttt{figures/plot\_raw.png}
+  \]
+
+  \noindent \textbf{Suggested edit:} Label axes clearly (what is being measured), and include a legend title.
+
+  \item \textbf{Plot 2: scaled version (required).}
+  
+  Make the \emph{same} plot again, but change the scale of the x-axis to address overdispersion. Use one of:
+  \begin{itemize}
+    \item log scaling (e.g., log10 x-axis), or
+    \item another defensible scaling choice discussed in lecture.
+  \end{itemize}
+
+  \noindent Save the figure as:
+  \[
+    \texttt{figures/plot\_scaled.png}
+  \]
+
+  \noindent \textbf{Suggested edit:} Make the axis label explicitly indicate the scaling choice (e.g., “log scale”).
+
+  \item \textbf{Interpretation + GitHub submission (proof required).}
+  \begin{enumerate}
+    \item In \texttt{outputs/writeup.md}, write 8--12 sentences answering:
+    \begin{itemize}
+      \item What is mapped to x, y, and color in both plots?
+      \item What is hard to see on the raw scale but easier to see on the scaled plot?
+      \item What (if anything) becomes harder to interpret after scaling?
+      \item If you had to show only one version to a general audience, which would you choose and why?
+    \end{itemize}
+
+    \item Commit and push your work to GitHub.
+
+    \item \textbf{Proof (write-up):} paste:
+    \begin{itemize}
+      \item the output of \texttt{git status} after your commit (clean working tree), and
+      \item the output of \texttt{git log -1} (one line is fine).
+    \end{itemize}
+  \end{enumerate}
+
+\end{enumerate}
+
+\section*{Optional challenge (one extra)}
+Create a second scaled plot where you change the scale choice (e.g., compare log10 vs another scaling approach). In 3--5 sentences, explain which scaling choice better supports a clear comparison and why.
+
+\section*{Checklist (before you leave)}
+\begin{itemize}
+  \item \texttt{scripts/lab.R} exists and runs top-to-bottom inside an R Project
+  \item \texttt{figures/plot\_raw.png} exists
+  \item \texttt{figures/plot\_scaled.png} exists
+  \item \texttt{outputs/writeup.md} includes required interpretation and proofs
+  \item Work is committed and pushed to GitHub
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,144 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, graphicx, hyperref}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage[margin=1in]{geometry}
+
+\title{In-Class Problem Set: Reproducible Visualization Workflow (R + GitHub)}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent \textbf{Goal.} Extend the code from the lecture slides to produce a small, reproducible workflow: load the provided dataset, choose variables using the codebook, create multiple figures using explicit mappings, and submit your work through GitHub.
+
+\medskip
+\noindent \textbf{What to submit (in your GitHub repo).}
+\begin{itemize}
+  \item A script file: \texttt{scripts/lab.R}
+  \item A short write-up: \texttt{outputs/writeup.md}
+  \item Saved figures: at least 4 image files in \texttt{figures/}
+  \item (Optional but recommended) a log file: \texttt{outputs/log.txt}
+\end{itemize}
+
+\medskip
+\noindent \textbf{Rules.}
+\begin{itemize}
+  \item Work inside an \textbf{R Project}.
+  \item Use a \textbf{sequential, hard-coded workflow} (no user-defined functions).
+  \item You may consult notes and documentation. If you use any external code, cite it in your write-up.
+\end{itemize}
+
+\section*{Questions}
+
+\begin{enumerate}
+
+  \item \textbf{Create an R Project (proof required).}
+  \begin{enumerate}
+    \item Create an R Project for this course on your computer.
+    \item \textbf{Proof:} In your \texttt{outputs/writeup.md}, include:
+    \begin{itemize}
+      \item the output of \texttt{getwd()} run from inside the project, and
+      \item a screenshot showing the \texttt{.Rproj} file in your project folder \emph{or} the RStudio Project name visible in the RStudio window.
+    \end{itemize}
+  \end{enumerate}
+
+  \item \textbf{Load the provided dataset from the \texttt{data/} folder.}
+  \begin{enumerate}
+    \item Confirm the dataset file exists in \texttt{data/}. (Do not manually move it.)
+    \item Write code in \texttt{scripts/lab.R} to load it into R as an object named \texttt{df}.
+    \item \textbf{Proof:} In \texttt{outputs/writeup.md}, include:
+    \begin{itemize}
+      \item the dimensions of \texttt{df} (rows $\times$ columns), and
+      \item the first 3 column names.
+    \end{itemize}
+  \end{enumerate}
+
+  \item \textbf{Select variables using the codebook.}
+  \begin{enumerate}
+    \item Consult the dataset codebook and choose:
+    \begin{itemize}
+      \item \textbf{two continuous} variables (numeric, meaningfully ordered with many values), and
+      \item \textbf{two categorical} variables (groups/labels).
+    \end{itemize}
+    \item In \texttt{outputs/writeup.md}, list the four variables and briefly justify (1 sentence each) why they are continuous vs categorical.
+    \item \textbf{Proof:} Include either \texttt{str(df)} output for the four variables \emph{or} a small table showing each variable and its class/type.
+  \end{enumerate}
+
+  \item \textbf{Create a reproducible folder structure + (optional) logging.}
+  \begin{enumerate}
+    \item Ensure these folders exist in your project:
+    \begin{itemize}
+      \item \texttt{scripts/}
+      \item \texttt{outputs/}
+      \item \texttt{figures/}
+      \item \texttt{logs/} \textit{(optional but recommended)}
+    \end{itemize}
+    \item In \texttt{scripts/lab.R}, add code that creates any missing directories (without errors).
+    \item \textbf{Proof:} In \texttt{outputs/writeup.md}, include \texttt{list.files()} output showing the folders.
+    \item \textbf{Optional (challenge):} Create a simple log file \texttt{outputs/log.txt} that records:
+    \begin{itemize}
+      \item the current date/time,
+      \item the dataset filename loaded,
+      \item and the names of the four selected variables.
+    \end{itemize}
+  \end{enumerate}
+
+  \item \textbf{Make three plot extensions + comment on them.}
+  
+  Using the lecture code as your baseline, create \textbf{three} distinct extensions (three separate figures). Each figure must include a caption in your write-up that explains:
+  \begin{itemize}
+    \item what variables are mapped to what visual properties,
+    \item what comparison is easiest to make,
+    \item and one default choice you are accepting (or changing) and why.
+  \end{itemize}
+
+  \medskip
+  \noindent Your three extensions must come from different categories below (choose any three):
+  \begin{enumerate}
+    \item \textbf{Add a mapping:} map a categorical variable to \texttt{color} or \texttt{shape}.
+    \item \textbf{Change the mark:} switch to a different geometry appropriate for the variable types (e.g., boxplot for outcome vs group).
+    \item \textbf{Add an annotation layer (lightweight):} add a title + axis labels + a one-sentence caption in the write-up.
+    \item \textbf{Handle overplotting:} use transparency (\texttt{alpha}) and briefly explain why.
+    \item \textbf{Re-order categories:} reorder a categorical axis to improve interpretability (explain the ordering rule).
+  \end{enumerate}
+
+  \medskip
+  \noindent \textbf{Saving requirement:} Save each plot to \texttt{figures/} using \texttt{ggsave()} (do not rely on screenshots). Name files clearly (e.g., \texttt{figures/plot1.png}, \texttt{figures/plot2.png}, \texttt{figures/plot3.png}).
+
+  \item \textbf{Public vs expert visualization + GitHub submission (proof required).}
+  \begin{enumerate}
+    \item Create \textbf{two} versions of the \emph{same} visualization:
+    \begin{itemize}
+      \item one intended for a \textbf{general public} audience, and
+      \item one intended for an \textbf{expert} audience.
+    \end{itemize}
+    \item In \texttt{outputs/writeup.md}, state at least \textbf{three decision rules} you used to adapt the design (e.g., labeling density, uncertainty/context, annotation, choice of scale, what to simplify vs keep).
+    \item \textbf{Challenge ideas (pick one):}
+    \begin{itemize}
+      \item Add a short ``limitations'' note for the public version (1--2 sentences).
+      \item Add a technical note for the expert version describing a key default or transformation.
+      \item Add a small multiple (two panels) for the expert version only.
+      \item Add a deliberately ``bad'' version and write 3 bullets on why it misleads.
+    \end{itemize}
+    \item \textbf{GitHub requirement:} Commit and push your work.
+    
+    \textbf{Proof:} In \texttt{outputs/writeup.md}, include:
+    \begin{itemize}
+      \item the output of \texttt{git status} \emph{after} committing (showing a clean working tree), and
+      \item either a screenshot of your GitHub repo showing the latest commit \emph{or} the commit hash and message.
+    \end{itemize}
+  \end{enumerate}
+
+\end{enumerate}
+
+\section*{Checklist (before you leave)}
+\begin{itemize}
+  \item \texttt{scripts/lab.R} exists and runs top-to-bottom
+  \item \texttt{outputs/writeup.md} exists and includes required proofs
+  \item At least 4 figures saved in \texttt{figures/} (3 extensions + 2 audience versions can overlap if you clearly label)
+  \item Work is pushed to GitHub
+\end{itemize}
+
+\end{document}

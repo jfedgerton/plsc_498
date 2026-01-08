@@ -1,0 +1,148 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, graphicx, hyperref}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage[margin=1in]{geometry}
+
+\title{In-Class Problem Set: Environment Setup + Git/GitHub Workflow (R)}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent \textbf{Goal.} Set up a reproducible workflow on your machine so you can run course code, save outputs, and submit work through GitHub.
+
+\medskip
+\noindent \textbf{What to submit (in your GitHub repo).}
+\begin{itemize}
+  \item A short write-up: \texttt{outputs/setup\_check.md}
+  \item A screenshot file: \texttt{outputs/terminal\_proof.png} (or \texttt{.jpg})
+  \item A text file created by R: \texttt{outputs/r\_check.txt}
+\end{itemize}
+
+\medskip
+\noindent \textbf{Rules.}
+\begin{itemize}
+  \item Work inside an \textbf{R Project}.
+  \item Use the \textbf{Terminal tab} for Git commands (not the R Console).
+  \item If something breaks: read the error, check your paths, ask a neighbor, then ask for help.
+\end{itemize}
+
+\section*{Questions}
+
+\begin{enumerate}
+
+  \item \textbf{Install / verify your toolchain (proof required).}
+  \begin{enumerate}
+    \item Confirm you can open \textbf{RStudio} and run R code in the \textbf{Console}.
+    \item In the Console, run:
+\begin{verbatim}
+R.version.string
+\end{verbatim}
+    \item \textbf{Proof:} Create a file \texttt{outputs/r\_check.txt} that contains your R version string.
+
+    \medskip
+    \noindent \textit{Hint:} Use \texttt{writeLines(...)} to write text to a file.
+  \end{enumerate}
+
+  \item \textbf{Create an R Project (proof required).}
+  \begin{enumerate}
+    \item Create an R Project folder for this course on your computer.
+    \item Open the \texttt{.Rproj} file so RStudio is working inside that project.
+    \item In the Console, run:
+\begin{verbatim}
+getwd()
+\end{verbatim}
+    \item \textbf{Proof:} In \texttt{outputs/setup\_check.md}, paste the output of \texttt{getwd()} and explain (1 sentence) what it means.
+  \end{enumerate}
+
+  \item \textbf{Create a reproducible folder structure.}
+  \begin{enumerate}
+    \item Inside your R Project, ensure these folders exist:
+    \begin{itemize}
+      \item \texttt{data/}
+      \item \texttt{scripts/}
+      \item \texttt{outputs/}
+      \item \texttt{figures/}
+    \end{itemize}
+    \item Write R code (in the Console or a script) that creates these folders without errors.
+    \item \textbf{Proof:} In \texttt{outputs/setup\_check.md}, include the output of:
+\begin{verbatim}
+list.files()
+\end{verbatim}
+    showing the four folders.
+  \end{enumerate}
+
+  \item \textbf{Set up Git and confirm it works (proof required).}
+  \begin{enumerate}
+    \item Open the \textbf{Terminal tab} in RStudio.
+    \item Run:
+\begin{verbatim}
+git --version
+\end{verbatim}
+    \item Configure your name and email (use the same email as your GitHub account):
+\begin{verbatim}
+git config --global user.name "YOUR NAME"
+git config --global user.email "YOUR EMAIL"
+\end{verbatim}
+    \item \textbf{Proof:} In \texttt{outputs/setup\_check.md}, paste the output of:
+\begin{verbatim}
+git config --global user.name
+git config --global user.email
+\end{verbatim}
+  \end{enumerate}
+
+  \item \textbf{Clone the course repository and run a test script.}
+  \begin{enumerate}
+    \item In the Terminal tab, navigate to where you want the repo to live (or do this in File Explorer/Finder).
+    \item Clone the course repo:
+\begin{verbatim}
+git clone <COURSE_REPO_URL>
+\end{verbatim}
+    \item Open the cloned folder as an R Project (if an \texttt{.Rproj} exists) or create one.
+    \item Run a simple test in the Console (example):
+\begin{verbatim}
+1 + 1
+\end{verbatim}
+    \item \textbf{Proof:} Take a screenshot showing the Terminal tab in RStudio and save it as \texttt{outputs/terminal\_proof.png}.
+  \end{enumerate}
+
+  \item \textbf{Commit and push your first submission (proof required).}
+  \begin{enumerate}
+    \item Create your write-up file: \texttt{outputs/setup\_check.md}. Include:
+    \begin{itemize}
+      \item Your \texttt{getwd()} output
+      \item Your Git name/email confirmation outputs
+      \item A 2--3 sentence reflection: what broke (if anything) and what step was least intuitive
+    \end{itemize}
+    \item In the Terminal tab, run the Git workflow:
+\begin{verbatim}
+git status
+git add .
+git commit -m "Setup: environment + project + git"
+git push
+\end{verbatim}
+    \item \textbf{Proof:} In \texttt{outputs/setup\_check.md}, paste:
+    \begin{itemize}
+      \item the output of \texttt{git status} after your commit (clean working tree), and
+      \item either (a) a screenshot of GitHub showing the commit, or (b) the commit hash from:
+\begin{verbatim}
+git log -1
+\end{verbatim}
+    \end{itemize}
+  \end{enumerate}
+
+\end{enumerate}
+
+\section*{Checklist (before you leave)}
+\begin{itemize}
+  \item RStudio opens and runs R code
+  \item You are working inside an R Project
+  \item \texttt{outputs/} and \texttt{figures/} exist
+  \item Git works in the Terminal tab
+  \item You cloned the course repo
+  \item Your write-up and screenshot are committed and pushed to GitHub
+\end{itemize}
+
+\end{document}
