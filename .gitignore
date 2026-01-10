@@ -3,9 +3,10 @@
 .RData
 .Ruserdata
 .DS_Store
-midterm
-textbook
+midterm/
+textbook/
 *.aux
 *.txt
 *.out
+*.log
 *.asfgz

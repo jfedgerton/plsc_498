@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.10) (preloaded format=pdflatex 2023.5.9)  8 JAN 2026 14:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.10) (preloaded format=pdflatex 2023.5.9)  10 JAN 2026 16:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -554,7 +554,7 @@ Package hyperref Info: Link coloring ON on input line 32.
 \openout3 = `syllabus.out'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 52--53
+Underfull \hbox (badness 10000) in paragraph at lines 53--54
 
  []
 
@@ -583,7 +583,7 @@ ers/Jared_Edgerton/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm
 ublic/amsfonts/cm/cmr12.pfb><C:/Users/Jared_Edgerton/AppData/Local/Programs/MiK
 TeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/Jared_Edgerton/AppData/
 Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on syllabus.pdf (7 pages, 157775 bytes).
+Output written on syllabus.pdf (7 pages, 157565 bytes).
 PDF statistics:
  132 PDF objects out of 1000 (max. 8388607)
  50 named destinations out of 1000 (max. 500000)
