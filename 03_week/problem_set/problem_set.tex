@@ -103,6 +103,52 @@ You may submit this assignment using \textbf{either} of the following methods:
       \item \texttt{county\_total\_votes = DEMOCRAT + REPUBLICAN}
       \item \texttt{rep\_share = REPUBLICAN / (DEMOCRAT + REPUBLICAN)}
     \end{itemize}
+    
+\item \textbf{Pseudo-code (follow, but fill in blanks).} Add something like this to \texttt{scripts/lab.R}:
+
+\begin{verbatim}
+# ---- Load + clean + aggregate (pseudo-code) ----
+
+library(____)
+library(____)
+
+# 1) Load data
+df <- read.csv("data/______.csv")
+
+# 2) Quick inspection (pick at least two)
+dim(df)
+names(df)
+head(df)
+
+# 3) Filter down to the rows we want
+df_keep <- df %>%
+  filter(stage == "____") %>%
+  filter(party_simplified %in% c("____", "____")) %>%
+  filter(_____)   # county info is not missing
+
+# 4) County-level aggregation
+county_df <- df_keep %>%
+  group_by(_____) %>%          # county (and maybe state if needed)
+  summarize(
+    dem_votes = sum(votes[party_simplified == "DEMOCRAT"], na.rm = TRUE),
+    rep_votes = sum(votes[party_simplified == "REPUBLICAN"], na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    county_total_votes = dem_votes + rep_votes,
+    rep_share = rep_votes / (dem_votes + rep_votes)
+  )
+
+# 5) Checks (fill in at least two)
+nrow(county_df)
+summary(county_df$county_total_votes)
+summary(county_df$rep_share)
+# Optional: confirm rep_share is between 0 and 1
+# range(_____)
+\end{verbatim}
+
+    
+    
     \item \textbf{Suggested edit:} Use the codebook (provided with the course materials) to confirm the meaning of \texttt{votes}, \texttt{party\_simplified}, and \texttt{county\_name}. Cite the codebook filename in your write-up.
     \item \textbf{Proof (write-up):} report:
     \begin{itemize}
